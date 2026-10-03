@@ -6,6 +6,9 @@ obj/
 .vs/
 *.user
 
+# Local working notes for Claude Code
+CLAUDE.md
+
 # Game developers' code: never commit
 decompiled/
 lib/
