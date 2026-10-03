@@ -4,7 +4,7 @@
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>GK2.ConveyorRoundRobin</AssemblyName>
     <RootNamespace>GK2.ConveyorRoundRobin</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <LangVersion>latest</LangVersion>
     <!-- Required for the publicized assembly: makes Mono skip member access checks at runtime. -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -21,6 +21,11 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>$(PublicizedLibDir)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Base types of Item / WgoData (ObjectLinkedToDefinition<>) live here. -->
+    <Reference Include="LazyBearTechnology">
+      <HintPath>$(GameManagedDir)\LazyBearTechnology.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">

@@ -74,6 +74,23 @@ assembly-publicizer "$managed\Assembly-CSharp.dll" --strip -f -o lib\Assembly-CS
 Both are .NET global tools in `%USERPROFILE%\.dotnet\tools`. Last generated from Steam build
 25676698 (game files dated 2026-10-03).
 
+## How the patch works
+
+`ChestRoundRobin.cs`, applied only to `ConveyorChestComponent`s with two or more output belts:
+
+- Postfix on `ConveyorChestComponent.CanGiveItem` refuses the belts' own mid-tick pulls.
+- A handler placed first in `ConveyorSystem.OnUpdated` (installed from a prefix on
+  `ConveyorSystem.CustomUpdate`) then hands items out at the end of the tick: it walks `SlotsData`
+  starting after the side served last and calls each output belt's vanilla `PerformItemTransfer()`.
+  It must run before the belt animators' handlers on the same event.
+- Postfix on `ConveyorChestComponent.GiveItem` records that a hand-out happened, which advances the rotation.
+- Any failure disables the gate and logs an error, so the chest falls back to vanilla rather than jamming.
+
+Config is `<game>\BepInEx\config\gk2.conveyorroundrobin.cfg`: `General.Enabled` (vanilla when false)
+and `Debug.LogHandOuts` (one log line per hand-out; off by default in code, switched on in the
+local config while testing). First in-game test on 2026-10-03 (Steam build 25676698): chests
+alternated sides and the log showed no errors.
+
 ## How the conveyor system works (vanilla)
 
 All classes are in the global namespace of `Assembly-CSharp`.
