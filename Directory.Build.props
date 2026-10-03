@@ -1,0 +1,12 @@
+<Project>
+  <!-- The one place the game location is defined. Override per machine with
+       `dotnet build -p:GamePath="D:\..."` or a GamePath environment variable. -->
+  <PropertyGroup>
+    <GamePath Condition="'$(GamePath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Graveyard Keeper 2</GamePath>
+    <GameManagedDir>$(GamePath)\GraveyardKeeper2_Data\Managed</GameManagedDir>
+    <BepInExCoreDir>$(GamePath)\BepInEx\core</BepInExCoreDir>
+    <BepInExPluginsDir>$(GamePath)\BepInEx\plugins</BepInExPluginsDir>
+    <!-- Publicized, method-body-stripped copy of the game assembly (gitignored). -->
+    <PublicizedLibDir>$(MSBuildThisFileDirectory)lib</PublicizedLibDir>
+  </PropertyGroup>
+</Project>

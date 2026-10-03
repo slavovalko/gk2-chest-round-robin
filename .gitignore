@@ -1,0 +1,15 @@
+# Build output
+bin/
+obj/
+
+# IDE
+.vs/
+*.user
+
+# Game developers' code: never commit
+decompiled/
+lib/
+
+# Game / loader DLLs must never land in the repo, wherever they end up
+*.dll
+*.pdb

@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GK2.ConveyorRoundRobin/GK2.ConveyorRoundRobin.csproj" />
+  </Folder>
+</Solution>
