@@ -91,6 +91,23 @@ and `Debug.LogHandOuts` (one log line per hand-out; off by default in code, swit
 local config while testing). First in-game test on 2026-10-03 (Steam build 25676698): chests
 alternated sides and the log showed no errors.
 
+## Splitter findings (out of scope, not patched)
+
+The mod deliberately changes chests only. Notes from investigating the splitter with a temporary
+logging probe (since removed):
+
+- Confirmed in-game 2026-10-04: a T-junction splitter that jammed with one side full and the
+  other empty had only **one output registered** (`ConnectedWgoData.Count == 1`). The belt on the
+  dead side was not a child of the splitter in the game's data. Removing that belt tile and
+  placing it again registered it, and deliveries to both outputs started. So the jam was a
+  build-time connection failure (`ConveyorBuildPointer.MakeConnections` /
+  `ConveyorSplitterBuildConnector.TryConnect`), not the splitter's transfer logic. Why the
+  original placement failed to connect is unknown.
+- From reading the code only, not observed: the turn (`currentChildTransferIndex`) flips once per
+  tick whether or not an item moved, so items arriving every second tick all leave by the same
+  side, and a full side wastes every other tick. A splitter with three registered outputs would
+  refuse everyone (`CanGiveItem` handles only 1 or 2; `MAX_CHILDREN_COUNT` is never enforced).
+
 ## How the conveyor system works (vanilla)
 
 All classes are in the global namespace of `Assembly-CSharp`.
